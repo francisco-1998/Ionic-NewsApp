@@ -13,12 +13,12 @@ export class NewsService {
   
   getTopHeadlines(){
     this.page=this.page+25;
-    return this.http.get<RespuestaNoticia>(`http://api.mediastack.com/v1/news?access_key=fff7967a2d8ded6330e406838d996505&languages=es,en&offset=${this.page}`)
+    return this.http.get<RespuestaNoticia>(`http://api.mediastack.com/v1/news?access_key=433e605904f310965246482a8a11f24f&languages=es,en&offset=${this.page}`)
   }
 
   getNewsCategory(categoria:string){
     this.pageC=this.pageC+25;
-    return this.http.get<RespuestaNoticia>(`http://api.mediastack.com/v1/news?access_key=fff7967a2d8ded6330e406838d996505&categories=${categoria}&languages=es,en&offset=${this.pageC}`)
+    return this.http.get<RespuestaNoticia>(`http://api.mediastack.com/v1/news?access_key=433e605904f310965246482a8a11f24f&categories=${categoria}&languages=es,en&offset=${this.pageC}`)
   }
 }
 
