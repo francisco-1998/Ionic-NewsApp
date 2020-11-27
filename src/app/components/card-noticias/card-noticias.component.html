@@ -3,8 +3,13 @@
     <ion-card-subtitle>
       <span class="text-primary">{{ indice + 1 }}. </span>
       <span class="noticias-source-name">{{ item.source }}</span>
+      <div class="noticias-more">
+        <ion-button (click)="compartirRS()" fill="clear">
+          <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </div>
     </ion-card-subtitle>
-    <ion-card-title>{{ item.title }}</ion-card-title>
+    <ion-card-title (click)="abrirNavegador()" style="font-size: 18px;">{{ item.title }}</ion-card-title>
   </ion-card-header>
-  <ion-img [src]="item.image" *ngIf="item.image!=null"></ion-img>
+  <ion-img (click)="abrirNavegador()" [src]="item.image" *ngIf="item.image!=null"></ion-img>
 </ion-card>
