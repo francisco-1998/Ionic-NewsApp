@@ -4,6 +4,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ActionSheetController } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { DataSqlLiteService } from '../../services/data-sql-lite.service';
+import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-card-noticias',
   templateUrl: './card-noticias.component.html',
@@ -18,9 +19,19 @@ export class CardNoticiasComponent implements OnInit {
   constructor(private iab: InAppBrowser, 
               public actionSheetCtrl: ActionSheetController, 
               private socialSharing: SocialSharing,
-              private dataLocal:DataSqlLiteService) { }
+              private dataLocal:DataSqlLiteService,
+              public toastCtrl: ToastController) { }
 
   ngOnInit() {}
+
+
+  async messageUser(msg:string) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration: 2000,
+    });
+    toast.present();
+  }
 
   abrirNavegador(){
     console.log('Noticia:',this.item.url);
@@ -37,8 +48,8 @@ export class CardNoticiasComponent implements OnInit {
         icon: 'trash',
         cssClass: 'action-dark',
         handler: () => {
-          console.log('Delete clicked');
           this.dataLocal.borrarNoticiasFavoritas(this.item);
+          this.messageUser('La noticia ha sido eliminada de favoritas');
         }
       }
     }
