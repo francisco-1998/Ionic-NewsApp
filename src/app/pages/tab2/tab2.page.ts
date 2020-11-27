@@ -37,4 +37,26 @@ export class Tab2Page implements OnInit {
     })
   }
 
+  cargarNoticias2(event?) {
+    this.dataNews = []
+    this.news.getTopHeadlines().subscribe(resp => {
+      if (resp.data.length === 0) {
+        event.target.disabled = true;
+        event.target.complete();
+        return;
+      }
+      this.dataNews.push(...resp.data);
+      if (event) {
+        event.target.complete();
+      }
+    })
+  }
+
+  doRefresh(event){
+    setTimeout(() => {
+      this.cargarNoticias2();
+      event.target.complete();
+    }, 250);
+  }
+
 }

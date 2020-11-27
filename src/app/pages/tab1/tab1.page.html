@@ -13,6 +13,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" color="dark">
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
     <app-list-card-noticias [noticias]="categorizadas"></app-list-card-noticias>
     <ion-infinite-scroll threshold="150px" position="bottom" (ionInfinite)="loadData($event)">
       <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">

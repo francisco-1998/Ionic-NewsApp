@@ -7,9 +7,16 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" color="dark">
-    <app-list-card-noticias [noticias]="dataNews"></app-list-card-noticias>
-    <ion-infinite-scroll threshold="150px" (ionInfinite)="loadMoreData($event)">
-      <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando noticias..." class="loadingspinner">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <app-list-card-noticias [noticias]="dataNews"></app-list-card-noticias>
+
+  <ion-infinite-scroll threshold="150px" (ionInfinite)="loadMoreData($event)">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando noticias..." class="loadingspinner">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>

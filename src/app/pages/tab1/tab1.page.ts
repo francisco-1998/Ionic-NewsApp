@@ -31,7 +31,7 @@ export class Tab1Page implements OnInit {
   loadData(event){
     this.cargarNoticiasCategorizadas(this.segment.value, event);
   }
-
+ 
 
   cargarNoticiasCategorizadas(categoria:string, event?){
     this.newService.getNewsCategory(categoria).subscribe(resp=>{
@@ -41,6 +41,24 @@ export class Tab1Page implements OnInit {
         event.target.complete();
       }
     })
+  }
+
+  cargarNoticiasCategorizadas2(categoria:string, event?){
+    this.categorizadas = [];
+    this.newService.getNewsCategory(categoria).subscribe(resp=>{
+      this.categorizadas.push(...resp.data);
+      console.log(resp.data);
+      if (event) {
+        event.target.complete();
+      }
+    })
+  }
+
+  doRefresh(event){
+    setTimeout(() => {
+      this.cargarNoticiasCategorizadas2(this.segment.value);
+      event.target.complete();
+    }, 250);
   }
 
 }
