@@ -9,6 +9,7 @@ import { Noticia } from '../../models/news.model';
 export class ListCardNoticiasComponent implements OnInit {
 
   @Input() noticias:Noticia[]=[];
+  @Input() enfavoritos = false;
   constructor() { }
 
   ngOnInit() {}

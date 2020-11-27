@@ -3,15 +3,22 @@ import { Noticia } from '../../models/news.model';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ActionSheetController } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { DataSqlLiteService } from '../../services/data-sql-lite.service';
 @Component({
   selector: 'app-card-noticias',
   templateUrl: './card-noticias.component.html',
   styleUrls: ['./card-noticias.component.scss'],
 })
 export class CardNoticiasComponent implements OnInit {
+  
   @Input() item:Noticia; 
-  @Input() indice:number; 
-  constructor(private iab: InAppBrowser, public actionSheetCtrl: ActionSheetController, private socialSharing: SocialSharing) { }
+  @Input() indice:number;
+  @Input() enfavoritos; 
+
+  constructor(private iab: InAppBrowser, 
+              public actionSheetCtrl: ActionSheetController, 
+              private socialSharing: SocialSharing,
+              private dataLocal:DataSqlLiteService) { }
 
   ngOnInit() {}
 
@@ -21,6 +28,33 @@ export class CardNoticiasComponent implements OnInit {
   }
 
   async compartirRS(){
+
+    let boton;
+
+    if(this.enfavoritos){
+      boton=  {
+        text: 'Borrar de favoritos',
+        icon: 'trash',
+        cssClass: 'action-dark',
+        handler: () => {
+          console.log('Delete clicked');
+          this.dataLocal.borrarNoticiasFavoritas(this.item);
+        }
+      }
+    }
+    else{
+      boton =  {
+        text: 'Añadir a favoritos',
+        icon: 'star',
+        cssClass: 'action-dark',
+        handler: () => {
+          console.log('Play clicked');
+          this.dataLocal.guardarNoticiasFavoritas(this.item);
+        }
+      }
+    }
+
+
     const actionSheet = await this.actionSheetCtrl.create({
       cssClass: 'my-custom-class',
       buttons: [{
@@ -36,14 +70,8 @@ export class CardNoticiasComponent implements OnInit {
             this.item.url
           )
         }
-      }, {
-        text: 'Añadir a favoritos',
-        icon: 'star',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Play clicked');
-        }
-      },{
+      },boton,
+      {
         text: 'Cancelar',
         icon: 'close',
         role: 'cancel',
